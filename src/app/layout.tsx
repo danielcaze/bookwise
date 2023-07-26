@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import { getCssText } from "@/stitches.config";
-import { globalStyle } from "@/src/styles/global";
+import "@/src/styles/globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -15,15 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  globalStyle();
   return (
     <html lang="en">
-      <head>
-        <style
-          id="stitches"
-          dangerouslySetInnerHTML={{ __html: getCssText() }}
-        />
-      </head>
       <body className={nunito.className}>{children}</body>
     </html>
   );
