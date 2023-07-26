@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import { getCssText } from "@/stitches.config";
-import { globalStyle } from "@/styles/global";
+import { globalStyle } from "@/src/styles/global";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
