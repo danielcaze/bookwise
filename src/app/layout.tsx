@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import AuthContext from "./providers";
+import Providers from "./providers";
 import "@/src/styles/globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <AuthContext>{children}</AuthContext>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
