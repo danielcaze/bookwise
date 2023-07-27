@@ -9,11 +9,12 @@ type DescriptionProps = {
 
 export default function Description({ text }: DescriptionProps) {
   const [showMore, setShowMore] = useState(false);
-  console.log(showMore);
+  const greaterThanLimit = text.length > 200;
+
   return (
     <p className="text-gray300 leading-base text-sm">
-      {text.length > 200 ? truncate(text, showMore ? text.length : 200) : text}{" "}
-      {text.length > 200 && (
+      {truncate(text, greaterThanLimit && showMore ? text.length : 200)}{" "}
+      {greaterThanLimit && (
         <button
           onClick={(e) => {
             e.preventDefault();
