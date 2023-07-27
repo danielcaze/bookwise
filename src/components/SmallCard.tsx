@@ -8,7 +8,7 @@ type SmallCardProps = {
     name: string;
     author: string;
     rating: number;
-    image_url: string;
+    cover_url: string;
   };
 };
 
@@ -21,7 +21,7 @@ export default function SmallCard({ book }: SmallCardProps) {
     >
       <Image
         alt=""
-        src={book.image_url}
+        src={book.cover_url}
         height={94}
         width={64}
         className="rounded-xs"

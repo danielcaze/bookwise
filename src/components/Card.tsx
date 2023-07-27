@@ -3,22 +3,51 @@ import Avatar from "./Avatar";
 import { Rating } from "./Rating";
 import Link from "next/link";
 import Description from "./Description";
+import dayjs from "dayjs";
 
-export default function Card() {
+type CardProps = {
+  post: {
+    created_at: Date;
+    user: {
+      id: string;
+      name: string;
+      avatar_url: string;
+    };
+    book: {
+      id: string;
+      name: string;
+      description: string;
+      author: string;
+      rating: number;
+      cover_url: string;
+    };
+  };
+};
+
+export default function Card({ post }: CardProps) {
+  const formattedDate = dayjs(post.created_at).format(
+    "DD[ de ]MMMM[ às ]HH:mm[h]"
+  );
+  const dateFromNow = `há ${dayjs().from(post.created_at, true)}`;
   return (
     <Link
       href="/teste"
       className="flex flex-col gap-8 w-full p-6 rounded-md bg-gray700 border border-gray700 hover:border-gray600"
     >
       <div className="flex items-start gap-4">
-        <Avatar url="https://source.unsplash.com/random" variation="md" />
+        <Avatar
+          avatarUrl={post.user.avatar_url}
+          redirectUrl={`/profile/${post.user.id}`}
+          variation="md"
+        />
+
         <div className="flex-1">
-          <p className="text-md leading-base text-gray100">Daniel Cazé</p>
+          <p className="text-md leading-base text-gray100">{post.user.name}</p>
           <time
             className="text-gray400 text-sm leading-base"
-            title="3 de maio às 20:00h"
+            title={formattedDate}
           >
-            há ceca de um ano
+            {dateFromNow}
           </time>
         </div>
         <Rating value={1} />
@@ -35,14 +64,14 @@ export default function Card() {
         <div className="flex flex-col gap-5">
           <div className="flex flex-col">
             <strong className="text-gray100 font-bold text-md leading-short">
-              O Hobbit
+              {post.book.name}
             </strong>
             <span className="text-gray400 text-sm leading-base">
-              J.R.R Tolkien
+              {post.book.author}
             </span>
           </div>
 
-          <Description text="Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibha" />
+          <Description text={post.book.description} />
         </div>
       </div>
     </Link>

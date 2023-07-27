@@ -22,7 +22,10 @@ export default function LoginStatus() {
   if (data) {
     return (
       <div className="grid grid-cols-[2rem_1fr_1.25rem] items-center gap-3">
-        <Avatar url={data.user.avatar_url} />
+        <Link href={`/profile/${data.user.id}`} prefetch={false}>
+          <Avatar avatarUrl={data.user.avatar_url} />
+        </Link>
+
         <p className="text-gray200 text-sm truncate">{data.user.name}</p>
         <button onClick={handleSignOut}>
           <SignOut size={20} className="text-danger" />

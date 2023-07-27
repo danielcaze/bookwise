@@ -2,7 +2,8 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Providers from "./providers";
-import "@/src/styles/globals.css";
+import "../libs/dayjs";
+import "../styles/globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
