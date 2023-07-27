@@ -3,12 +3,15 @@
 import Image from "next/image";
 import { PROVIDERS } from "../enum";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type ButtonLoginProps = {
   provider?: PROVIDERS;
 };
 
 export default function ButtonLogin({ provider }: ButtonLoginProps) {
+  const router = useRouter();
+
   const logos = {
     [PROVIDERS.GOOGLE]: "/assets/google-icon.svg",
     [PROVIDERS.GITHUB]: "/assets/github-icon.svg",
@@ -20,7 +23,7 @@ export default function ButtonLogin({ provider }: ButtonLoginProps) {
   };
 
   const handleLogin = async () =>
-    provider ? login[provider]() : console.log("Logou");
+    provider ? await login[provider]() : router.push("/");
 
   return (
     <button
