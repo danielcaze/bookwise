@@ -19,11 +19,26 @@ button {
   font-weight: 400;
 }
 
-,
 a {
   color: inherit;
 }
 
 button {
   cursor: pointer;
+}
+
+.truncate-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.truncate-4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }

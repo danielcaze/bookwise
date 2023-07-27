@@ -58,7 +58,7 @@ export default function NavigationList() {
                 href={route.path}
               >
                 {route.icon}
-                <span className="text-gray400 text-md max-w-full truncate">
+                <span className="text-gray400 text-md max-w-full truncate leading-base">
                   {route.text}
                 </span>
               </Link>

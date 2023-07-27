@@ -36,7 +36,7 @@ export default function ButtonLogin({ provider }: ButtonLoginProps) {
         height={32}
         width={32}
       />
-      <span className="text-gray200 text-lg">
+      <span className="text-gray200 text-lg leading-base">
         {provider
           ? `Entrar com ${provider.charAt(0).toUpperCase() + provider.slice(1)}`
           : "Acessar como visitante"}

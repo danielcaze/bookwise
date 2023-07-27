@@ -60,7 +60,8 @@ module.exports = {
         danger: "#F75A68",
       },
       borderRadius: {
-        xs: "2.5px",
+        xxs: "2.5px",
+        xs: "4px",
         sm: "5px",
         md: "8px",
         lg: "10px",

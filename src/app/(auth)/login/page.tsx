@@ -25,8 +25,10 @@ export default function Login() {
       <div className="w-full">
         <div className="max-w-[18rem] w-full mx-auto flex flex-col gap-10 justify-center items-center justify-self-center align-self-center">
           <div className="w-full">
-            <strong className="text-gray100 text-lg">Boas vindas!</strong>
-            <p className="text-gray200 text-md">
+            <strong className="text-gray100 text-2xl leading-short">
+              Boas vindas!
+            </strong>
+            <p className="text-gray200 text-md leading-base">
               Faça seu login ou acesse como visitante.
             </p>
           </div>
