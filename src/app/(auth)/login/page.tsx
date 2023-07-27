@@ -1,6 +1,6 @@
-import { ButtonLogin } from "@/src/components/ButtonLogin";
-import { PROVIDERS } from "@/src/enum";
 import Image from "next/image";
+import ButtonLogin from "@/src/components/ButtonLogin";
+import { PROVIDERS } from "@/src/enum";
 
 export default function Login() {
   return (

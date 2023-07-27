@@ -1,10 +1,3 @@
-import Link from "next/link";
+import Home from "./(home)";
 
-export default function Home() {
-  return (
-    <main>
-      <h1>Hello World!</h1>
-      <Link href="/login">Login</Link>
-    </main>
-  );
-}
+export default Home;

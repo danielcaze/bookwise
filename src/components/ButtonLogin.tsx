@@ -1,18 +1,32 @@
+"use client";
+
 import Image from "next/image";
 import { PROVIDERS } from "../enum";
+import { signIn } from "next-auth/react";
 
 type ButtonLoginProps = {
   provider?: PROVIDERS;
 };
 
-export function ButtonLogin({ provider }: ButtonLoginProps) {
+export default function ButtonLogin({ provider }: ButtonLoginProps) {
   const logos = {
     [PROVIDERS.GOOGLE]: "/assets/google-icon.svg",
     [PROVIDERS.GITHUB]: "/assets/github-icon.svg",
   };
 
+  const login = {
+    [PROVIDERS.GOOGLE]: () => signIn(PROVIDERS.GOOGLE),
+    [PROVIDERS.GITHUB]: () => signIn(PROVIDERS.GITHUB),
+  };
+
+  const handleLogin = async () =>
+    provider ? login[provider]() : console.log("Logou");
+
   return (
-    <button className="w-full flex items-center gap-5 py-5 px-6 bg-gray600 rounded-md">
+    <button
+      className="w-full flex items-center gap-5 py-5 px-6 bg-gray600 rounded-md"
+      onClick={handleLogin}
+    >
       <Image
         alt=""
         src={provider ? logos[provider] : "/assets/rocket-icon.svg"}
