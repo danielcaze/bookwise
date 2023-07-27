@@ -26,9 +26,9 @@ type CardProps = {
 
 export default function Card({ post }: CardProps) {
   const formattedDate = dayjs(post.created_at).format(
-    "DD[ de ]MMMM[ às ]HH:mm[h]"
+    "DD[ de ]MMMM[ às ]HH:mm[h]",
   );
-  const dateFromNow = `há ${dayjs().from(post.created_at, true)}`;
+  const dateFromNow = dayjs(post.created_at).fromNow();
   return (
     <Link
       href="/teste"
@@ -50,13 +50,13 @@ export default function Card({ post }: CardProps) {
             {dateFromNow}
           </time>
         </div>
-        <Rating value={1} />
+        <Rating value={post.book.rating} />
       </div>
 
       <div className="grid grid-cols-[6.75rem_1fr] gap-5">
         <Image
           alt=""
-          src="/assets/Book.png"
+          src={post.book.cover_url}
           width={108}
           height={152}
           className="rounded-xs"

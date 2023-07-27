@@ -9,15 +9,11 @@ type DescriptionProps = {
 
 export default function Description({ text }: DescriptionProps) {
   const [showMore, setShowMore] = useState(false);
-
+  console.log(showMore);
   return (
-    <p
-      className={`text-gray300 leading-base text-sm ${
-        showMore ? "truncate-4" : "truncate-4"
-      }`}
-    >
-      {text.length > 230 ? truncate(text, showMore ? 230 : text.length) : text}{" "}
-      {text.length > 230 && (
+    <p className="text-gray300 leading-base text-sm">
+      {text.length > 200 ? truncate(text, showMore ? text.length : 200) : text}{" "}
+      {text.length > 200 && (
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -25,7 +21,7 @@ export default function Description({ text }: DescriptionProps) {
           }}
           className="text-purple100 font-bold leading-base text-sm"
         >
-          {showMore ? "ver mais" : "ver menos"}
+          {showMore ? "ver menos" : "ver mais"}
         </button>
       )}
     </p>
