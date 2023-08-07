@@ -27,7 +27,9 @@ export default function LoginStatus() {
           <Avatar avatarUrl={data.user.avatar_url} />
         </Link>
 
-        <p className="text-gray200 text-sm truncate">{firstName}</p>
+        <Link href={`/profile/${data.user.id}`} prefetch={false}>
+          <p className="text-gray200 text-sm truncate">{firstName}</p>
+        </Link>
         <button onClick={handleSignOut}>
           <SignOut size={20} className="text-danger" />
         </button>

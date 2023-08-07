@@ -3,8 +3,35 @@ import Card from "@/src/components/Card";
 import Heading from "@/src/components/Heading";
 import SmallCard from "@/src/components/SmallCard";
 import LastRead from "./components/LastRead";
+import { Book, Rating, User } from "@prisma/client";
 
-export default function Home() {
+type RatingsWithBookAndUser = Rating & {
+  book: Book;
+  user: User;
+};
+
+type RatingWithAverageRate = Book & {
+  rate: number;
+  rating: Rating;
+};
+
+export default async function Home() {
+  const [lastRatedBooksResponse, popularBooksResponse] = await Promise.all([
+    fetch("http://localhost:3000/api/books/last-ratings", {
+      cache: "no-store",
+    }),
+    fetch("http://localhost:3000/api/books/popular", {
+      cache: "no-store",
+    }),
+  ]);
+  const [lastRatingsData, popularData] = await Promise.all([
+    lastRatedBooksResponse.json(),
+    popularBooksResponse.json(),
+  ]);
+
+  const lastRatedBooks = lastRatingsData.books as RatingsWithBookAndUser[];
+  const popularBooks = popularData.books as RatingWithAverageRate[];
+
   return (
     <>
       <main className="flex flex-col gap-10">
@@ -19,139 +46,29 @@ export default function Home() {
             </strong>
           </div>
           <div className="flex flex-col gap-3">
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
-            <Card
-              post={{
-                book: {
-                  author: "J.K.K Moie",
-                  cover_url: "/assets/Book.png",
-                  description:
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                  id: "1",
-                  name: "Hobbit",
-                  rating: 4,
-                },
-                created_at: new Date(),
-                user: {
-                  avatar_url: "https://source.unsplash.com/random",
-                  id: "1",
-                  name: "Daniel Caze",
-                },
-              }}
-            />
+            {lastRatedBooks.map((rating) => {
+              return (
+                <Card
+                  key={rating.id}
+                  post={{
+                    book: {
+                      author: rating.book.author,
+                      cover_url: rating.book.cover_url,
+                      description: rating.book.summary,
+                      id: rating.book_id,
+                      name: rating.book.name,
+                      rating: rating.rate,
+                    },
+                    created_at: rating.created_at,
+                    user: {
+                      avatar_url: String(rating.user.avatar_url),
+                      id: rating.user.id,
+                      name: rating.user.name,
+                    },
+                  }}
+                />
+              );
+            })}
           </div>
         </section>
       </main>
@@ -164,42 +81,20 @@ export default function Home() {
           <ActionButton text="Ver todos" />
         </div>
         <div className="flex flex-col gap-3">
-          <SmallCard
-            book={{
-              id: "1",
-              name: "14 Hábitos de Desenvolvedores Altamente produtivos escrito por R. K. Simmons.",
-              cover_url: "/assets/Book.png",
-              author: "George Orwell",
-              rating: 4,
-            }}
-          />
-          <SmallCard
-            book={{
-              id: "1",
-              name: "14 Hábitos de Desenvolvedores Altamente produtivos escrito por R. K. Simmons.",
-              cover_url: "/assets/Book.png",
-              author: "George Orwell",
-              rating: 4,
-            }}
-          />
-          <SmallCard
-            book={{
-              id: "1",
-              name: "14 Hábitos de Desenvolvedores Altamente produtivos escrito por R. K. Simmons.",
-              cover_url: "/assets/Book.png",
-              author: "George Orwell",
-              rating: 4,
-            }}
-          />
-          <SmallCard
-            book={{
-              id: "1",
-              name: "14 Hábitos de Desenvolvedores Altamente produtivos escrito por R. K. Simmons.",
-              cover_url: "/assets/Book.png",
-              author: "George Orwell",
-              rating: 4,
-            }}
-          />
+          {popularBooks.map((book) => {
+            return (
+              <SmallCard
+                key={book.id}
+                book={{
+                  id: book.id,
+                  name: book.name,
+                  cover_url: book.cover_url,
+                  author: book.author,
+                  rating: book.rate,
+                }}
+              />
+            );
+          })}
         </div>
       </aside>
     </>

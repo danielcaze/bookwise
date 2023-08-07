@@ -33,7 +33,7 @@ export default function Avatar({
       data-variation={variation}
       className={twMerge(
         "bg-gray700 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle data-[variation='sm']:h-[2rem] data-[variation='sm']:w-[2rem] data-[variation='md']:h-[2.5rem] data-[variation='md']:w-[2.5rem] data-[variation='lg']:h-[4.5rem] data-[variation='lg']:w-[4.5rem] [&_>_div]:data-[variation='sm']:p-[1px] [&_>_div]:data-[variation='md']:p-[2px] [&_>_div]:data-[variation='lg']:p-[3px]",
-        className
+        className,
       )}
     >
       <div className="h-full w-full bg-gradient-vertical rounded-[inherit] overflow-hidden">

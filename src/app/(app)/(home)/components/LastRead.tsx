@@ -2,15 +2,43 @@
 
 import ActionButton from "@/src/components/ActionButton";
 import Card from "@/src/components/Card";
+import { Book, Rating, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+
+type BookWithRatings = Book & {
+  ratings: Rating[];
+  rate: number;
+  user: User;
+};
 
 export default function LastRead() {
-  const { data } = useSession();
+  const [lastBookRated, setLastBookRated] = useState<BookWithRatings | null>(
+    null,
+  );
+  const { data: sessionData } = useSession();
+
+  useEffect(() => {
+    const getLastBookRated = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/user/${sessionData?.user.id}/last-book-rated`,
+        );
+        const data = await response.json();
+        const lastBookRates = data.book as BookWithRatings;
+        setLastBookRated(lastBookRates);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (sessionData) {
+      getLastBookRated();
+    }
+  }, [sessionData]);
 
   return (
     <Suspense>
-      {data && (
+      {sessionData && lastBookRated && (
         <section className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <strong className="font-regular text-gray200 text-sm">
@@ -22,19 +50,18 @@ export default function LastRead() {
             variation="light"
             post={{
               book: {
-                author: "J.K.K Moie",
-                cover_url: "/assets/Book.png",
-                description:
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quisquam fugit neque animi, similique in nulla eveniet placeat, totam nobis, blanditiis praesentium sint quis odit architecto error facilis explicabo doloribus.",
-                id: "1",
-                name: "Hobbit",
-                rating: 4,
+                author: lastBookRated.author,
+                cover_url: lastBookRated.cover_url,
+                description: lastBookRated.summary,
+                id: lastBookRated.id,
+                name: lastBookRated.name,
+                rating: lastBookRated.rate,
               },
-              created_at: new Date(),
+              created_at: lastBookRated.created_at,
               user: {
-                avatar_url: "https://source.unsplash.com/random",
-                id: "1",
-                name: "Daniel Caze",
+                avatar_url: String(lastBookRated.user.avatar_url),
+                id: lastBookRated.user.id,
+                name: lastBookRated.user.name,
               },
             }}
           />
