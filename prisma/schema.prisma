@@ -8,37 +8,34 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
   avatar_url String?
-  created_at DateTime @default(now())
-
-  accounts Account[]
-  sessions Session[]
-  ratings  Rating[]
+  created_at DateTime  @default(now())
+  accounts   Account[]
+  ratings    Rating[]
+  sessions   Session[]
 
   @@map("users")
 }
 
 model Book {
-  id          String   @id @default(uuid())
+  id          String              @id @default(uuid())
   name        String
   author      String
   summary     String
   cover_url   String
   total_pages Int
-  created_at  DateTime @default(now())
-
-  categories CategoriesOnBooks[]
-  ratings    Rating[]
+  created_at  DateTime            @default(now())
+  categories  CategoriesOnBooks[]
+  ratings     Rating[]
 
   @@map("books")
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique
-
+  id    String              @id @default(uuid())
+  name  String              @unique
   books CategoriesOnBooks[]
 
   @@map("categories")
@@ -47,9 +44,8 @@ model Category {
 model CategoriesOnBooks {
   book_id    String
   categoryId String
-
-  book     Book     @relation(fields: [book_id], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  book       Book     @relation(fields: [book_id], references: [id])
 
   @@id([book_id, categoryId])
 }
@@ -59,12 +55,10 @@ model Rating {
   rate        Int
   description String
   created_at  DateTime @default(now())
-
-  book    Book   @relation(fields: [book_id], references: [id])
-  book_id String
-
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String
+  book_id     String
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  book        Book     @relation(fields: [book_id], references: [id])
 
   @@map("ratings")
 }
