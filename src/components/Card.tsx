@@ -3,7 +3,7 @@ import Avatar from "./Avatar";
 import { Rating } from "./Rating";
 import Link from "next/link";
 import Description from "./Description";
-import { getFormattedDate, getRelativeTime } from "../libs/dayjs";
+import { Time } from "./Time";
 
 type CardProps = {
   variation?: "light" | "dark";
@@ -25,10 +25,7 @@ type CardProps = {
   };
 };
 
-export default async function Card({ post, variation = "dark" }: CardProps) {
-  const formattedDate = await getFormattedDate(post.created_at);
-  const dateFromNow = await getRelativeTime(post.created_at);
-
+export default function Card({ post, variation = "dark" }: CardProps) {
   return (
     <Link
       href="/teste"
@@ -44,12 +41,7 @@ export default async function Card({ post, variation = "dark" }: CardProps) {
 
         <div className="flex-1">
           <p className="text-md leading-base text-gray100">{post.user.name}</p>
-          <time
-            className="text-gray400 text-sm leading-base"
-            title={formattedDate}
-          >
-            {dateFromNow}
-          </time>
+          <Time date={post.created_at} />
         </div>
         <Rating value={post.book.rating} />
       </div>

@@ -1,14 +1,11 @@
 import dayjs from "dayjs";
 
-let isConfigured = false;
-
 async function configureDayjs() {
-  if (!isConfigured) {
+  if (!dayjs().fromNow) {
     await import("dayjs/locale/pt-br");
     const module = await import("dayjs/plugin/relativeTime");
     dayjs.extend(module.default);
     dayjs.locale("pt-br");
-    isConfigured = true;
   }
 }
 

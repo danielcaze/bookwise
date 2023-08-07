@@ -36,7 +36,7 @@ export default function LoginStatus() {
   }
 
   return (
-    <Link className="flex items-center gap-3" href="/login">
+    <Link className="flex justify-center items-center gap-3" href="/login">
       <span className="text-md text-gray200">Fazer login</span>
       <SignOut size={20} className="text-green100" />
     </Link>
