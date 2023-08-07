@@ -3,9 +3,10 @@ import Avatar from "./Avatar";
 import { Rating } from "./Rating";
 import Link from "next/link";
 import Description from "./Description";
-import dayjs from "dayjs";
+import { getFormattedDate, getRelativeTime } from "../libs/dayjs";
 
 type CardProps = {
+  variation?: "light" | "dark";
   post: {
     created_at: Date;
     user: {
@@ -24,15 +25,15 @@ type CardProps = {
   };
 };
 
-export default function Card({ post }: CardProps) {
-  const formattedDate = dayjs(post.created_at).format(
-    "DD[ de ]MMMM[ às ]HH:mm[h]",
-  );
-  const dateFromNow = dayjs(post.created_at).fromNow();
+export default async function Card({ post, variation = "dark" }: CardProps) {
+  const formattedDate = await getFormattedDate(post.created_at);
+  const dateFromNow = await getRelativeTime(post.created_at);
+
   return (
     <Link
       href="/teste"
-      className="flex flex-col gap-8 w-full p-6 rounded-md bg-gray700 border border-gray700 hover:border-gray600"
+      data-variation={variation}
+      className="flex flex-col gap-8 w-full p-6 rounded-md data-[variation='light']:bg-gray600 data-[variation='dark']:bg-gray700 border border-gray700 hover:border-gray600"
     >
       <div className="flex items-start gap-4">
         <Avatar

@@ -58,6 +58,9 @@ module.exports = {
         gray800: "#0E1116",
 
         danger: "#F75A68",
+
+        "action-hover-purple100": "#8381D906",
+        "action-hover-gray200": "#E6E8F206",
       },
       borderRadius: {
         xxs: "2.5px",

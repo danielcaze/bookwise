@@ -20,13 +20,14 @@ export default function LoginStatus() {
   };
 
   if (data) {
+    const firstName = data.user.name.trim().split(" ")[0];
     return (
       <div className="grid grid-cols-[2rem_1fr_1.25rem] items-center gap-3">
         <Link href={`/profile/${data.user.id}`} prefetch={false}>
           <Avatar avatarUrl={data.user.avatar_url} />
         </Link>
 
-        <p className="text-gray200 text-sm truncate">{data.user.name}</p>
+        <p className="text-gray200 text-sm truncate">{firstName}</p>
         <button onClick={handleSignOut}>
           <SignOut size={20} className="text-danger" />
         </button>
