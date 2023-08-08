@@ -22,7 +22,7 @@ export default function LastRead() {
     const getLastBookRated = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/user/${sessionData?.user.id}/last-book-rated`,
+          `${process.env.NEXTAUTH_URL}/api/user/${sessionData?.user.id}/last-book-rated`,
         );
         const data = await response.json();
         const lastBookRates = data.book as BookWithRatings;

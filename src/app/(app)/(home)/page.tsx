@@ -17,10 +17,10 @@ type RatingWithAverageRate = Book & {
 
 export default async function Home() {
   const [lastRatedBooksResponse, popularBooksResponse] = await Promise.all([
-    fetch("http://localhost:3000/api/books/last-ratings", {
+    fetch(`${process.env.NEXTAUTH_URL}/api/books/last-ratings`, {
       cache: "no-store",
     }),
-    fetch("http://localhost:3000/api/books/popular", {
+    fetch(`${process.env.NEXTAUTH_URL}/api/books/popular`, {
       cache: "no-store",
     }),
   ]);
