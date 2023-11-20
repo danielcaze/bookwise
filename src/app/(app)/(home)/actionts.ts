@@ -20,7 +20,7 @@ export async function getLastRatedMovies({
     `${process.env.NEXTAUTH_URL}/api/books/last-ratings?limit=${limit}&page=${page}`,
     {
       cache: "no-store",
-    }
+    },
   ).then((response) => response.json());
 
   return (response.books ?? []) as RatingsWithBookAndUser[];

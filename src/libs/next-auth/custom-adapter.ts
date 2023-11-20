@@ -4,7 +4,7 @@ import { parseCookies, destroyCookie } from "nookies";
 import { prisma } from "../prisma";
 export function PrismaAdapter(
   req: NextApiRequest | NextPageContext["req"],
-  res: NextApiResponse | NextPageContext["res"]
+  res: NextApiResponse | NextPageContext["res"],
 ): Adapter {
   return {
     async createUser(user) {
@@ -89,7 +89,6 @@ export function PrismaAdapter(
       return {
         id: user.id,
         name: user.name,
-        username: user.username,
         email: user.email!,
         avatar_url: user.avatar_url!,
         emailVerified: null,
@@ -110,7 +109,6 @@ export function PrismaAdapter(
       return {
         id: prismaUser.id,
         name: prismaUser.name,
-        username: prismaUser.username,
         email: prismaUser.email!,
         avatar_url: prismaUser.avatar_url!,
         emailVerified: null,
@@ -171,7 +169,6 @@ export function PrismaAdapter(
         user: {
           id: user.id,
           name: user.name,
-          username: user.username,
           email: user.email!,
           avatar_url: user.avatar_url!,
           emailVerified: null,

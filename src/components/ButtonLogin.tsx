@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { PROVIDERS } from "../enum";
+import { PROVIDERS } from "../enums";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 

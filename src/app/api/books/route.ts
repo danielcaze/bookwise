@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     const totalRatings = book.ratings.length;
     const sumOfRatings = book.ratings.reduce(
       (acc, rating) => acc + rating.rate,
-      0
+      0,
     );
     const averageRate = totalRatings ? sumOfRatings / totalRatings : 0;
 

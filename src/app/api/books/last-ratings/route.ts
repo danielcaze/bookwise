@@ -51,7 +51,7 @@ export async function GET(request: Request) {
           bookRatingsMap[rating.book.id].totalRate /
           bookRatingsMap[rating.book.id].count,
       },
-    })
+    }),
   );
 
   return NextResponse.json({

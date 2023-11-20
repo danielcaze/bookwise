@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   if (!userId) {
     return NextResponse.json(
       { message: "USER ID not provided." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
