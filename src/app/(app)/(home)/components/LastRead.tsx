@@ -14,23 +14,24 @@ type BookWithRatings = Book & {
 
 export default function LastRead() {
   const [lastBookRated, setLastBookRated] = useState<BookWithRatings | null>(
-    null,
+    null
   );
   const { data: sessionData } = useSession();
 
+  const getLastBookRated = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXTAUTH_URL}/api/user/${sessionData?.user.id}/last-book-rated`
+      );
+      const data = await response.json();
+      const lastBookRates = data.book as BookWithRatings;
+      setLastBookRated(lastBookRates);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const getLastBookRated = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/user/${sessionData?.user.id}/last-book-rated`,
-        );
-        const data = await response.json();
-        const lastBookRates = data.book as BookWithRatings;
-        setLastBookRated(lastBookRates);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     if (sessionData) {
       getLastBookRated();
     }
@@ -38,7 +39,7 @@ export default function LastRead() {
 
   return (
     <Suspense>
-      {sessionData && lastBookRated && (
+      {sessionData && lastBookRated ? (
         <section className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <strong className="font-regular text-gray200 text-sm">
@@ -66,6 +67,8 @@ export default function LastRead() {
             }}
           />
         </section>
+      ) : (
+        <></>
       )}
     </Suspense>
   );

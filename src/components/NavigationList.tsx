@@ -31,12 +31,12 @@ export default function NavigationList() {
       },
     },
     {
-      id: 2,
+      id: 3,
       disabled: !data,
       path: `/profile/${data?.user.id}`,
       text: "Perfil",
       get icon() {
-        const isPath = pathname === "/profile";
+        const isPath = pathname.includes("/profile");
         return <User size={24} weight={isPath ? "bold" : "regular"} />;
       },
     },

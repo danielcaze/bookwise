@@ -5,13 +5,24 @@ export async function GET(request: Request) {
   const urlSplitted = request.url.split("/");
   const userId = urlSplitted[urlSplitted.length - 2];
 
-  if (!userId)
+  if (!userId) {
     return NextResponse.json(
       { message: "USER ID not provided." },
-      { status: 400 },
+      { status: 400 }
     );
+  }
+
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get("page") ?? "1", 10) || 1;
+  const limit = parseInt(url.searchParams.get("limit") ?? "10", 10) || 10;
+
+  const skip = (page - 1) * limit;
+
+  const totalRatingsCount = await prisma.rating.count();
 
   const ratings = await prisma.rating.findMany({
+    take: limit,
+    skip,
     where: {
       user_id: userId,
     },
@@ -46,5 +57,11 @@ export async function GET(request: Request) {
     },
   }));
 
-  return NextResponse.json({ books: ratingsWithAverageRate });
+  return NextResponse.json({
+    books: ratingsWithAverageRate,
+    page,
+    limit,
+    totalPages: Math.ceil(totalRatingsCount / limit),
+    hasMore: skip + limit < totalRatingsCount,
+  });
 }

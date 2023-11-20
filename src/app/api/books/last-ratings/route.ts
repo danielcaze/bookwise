@@ -9,8 +9,18 @@ type RatingWithAverageRate = Rating & {
   user: User;
 };
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get("page") ?? "1", 10) || 1;
+  const limit = parseInt(url.searchParams.get("limit") ?? "10", 10) || 10;
+
+  const skip = (page - 1) * limit;
+
+  const totalRatingsCount = await prisma.rating.count();
+
   const ratings = await prisma.rating.findMany({
+    skip,
+    take: limit,
     orderBy: {
       created_at: "desc",
     },
@@ -41,8 +51,14 @@ export async function GET() {
           bookRatingsMap[rating.book.id].totalRate /
           bookRatingsMap[rating.book.id].count,
       },
-    }),
+    })
   );
 
-  return NextResponse.json({ books: ratingsWithAverageRate });
+  return NextResponse.json({
+    books: ratingsWithAverageRate,
+    page,
+    limit,
+    totalPages: Math.ceil(totalRatingsCount / limit),
+    hasMore: skip + limit < totalRatingsCount,
+  });
 }

@@ -1,14 +1,10 @@
 import ActionButton from "@/src/components/ActionButton";
-import Card from "@/src/components/Card";
 import Heading from "@/src/components/Heading";
 import SmallCard from "@/src/components/SmallCard";
 import LastRead from "./components/LastRead";
-import { Book, Rating, User } from "@prisma/client";
-
-type RatingsWithBookAndUser = Rating & {
-  book: Book;
-  user: User;
-};
+import { Book, Rating } from "@prisma/client";
+import { getLastRatedMovies } from "./actionts";
+import { LastRatedBooks } from "./components/LastRatedBooks";
 
 type RatingWithAverageRate = Book & {
   rate: number;
@@ -16,21 +12,15 @@ type RatingWithAverageRate = Book & {
 };
 
 export default async function Home() {
-  const [lastRatedBooksResponse, popularBooksResponse] = await Promise.all([
-    fetch(`${process.env.NEXTAUTH_URL}/api/books/last-ratings`, {
-      cache: "no-store",
-    }),
+  const [lastRatedBooks, popularBooksResponse] = await Promise.all([
+    getLastRatedMovies(),
     fetch(`${process.env.NEXTAUTH_URL}/api/books/popular`, {
       cache: "no-store",
-    }),
-  ]);
-  const [lastRatingsData, popularData] = await Promise.all([
-    lastRatedBooksResponse.json(),
-    popularBooksResponse.json(),
+    }).then((response) => response.json()),
   ]);
 
-  const lastRatedBooks = lastRatingsData.books as RatingsWithBookAndUser[];
-  const popularBooks = popularData.books as RatingWithAverageRate[];
+  const popularBooks: RatingWithAverageRate[] =
+    popularBooksResponse?.books ?? [];
 
   return (
     <>
@@ -46,29 +36,7 @@ export default async function Home() {
             </strong>
           </div>
           <div className="flex flex-col gap-3">
-            {lastRatedBooks.map((rating) => {
-              return (
-                <Card
-                  key={rating.id}
-                  post={{
-                    book: {
-                      author: rating.book.author,
-                      cover_url: rating.book.cover_url,
-                      description: rating.book.summary,
-                      id: rating.book_id,
-                      name: rating.book.name,
-                      rating: rating.rate,
-                    },
-                    created_at: rating.created_at,
-                    user: {
-                      avatar_url: String(rating.user.avatar_url),
-                      id: rating.user.id,
-                      name: rating.user.name,
-                    },
-                  }}
-                />
-              );
-            })}
+            <LastRatedBooks initialBooks={lastRatedBooks} />
           </div>
         </section>
       </main>

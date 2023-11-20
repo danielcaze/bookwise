@@ -1,8 +1,18 @@
 import { prisma } from "@/src/libs/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get("page") ?? "1", 10) || 1;
+  const limit = parseInt(url.searchParams.get("limit") ?? "10", 10) || 10;
+
+  const skip = (page - 1) * limit;
+
+  const totalBooksCount = await prisma.book.count();
+
   const books = await prisma.book.findMany({
+    skip,
+    take: limit,
     orderBy: {
       created_at: "desc",
     },
@@ -16,7 +26,7 @@ export async function GET() {
     const totalRatings = book.ratings.length;
     const sumOfRatings = book.ratings.reduce(
       (acc, rating) => acc + rating.rate,
-      0,
+      0
     );
     const averageRate = totalRatings ? sumOfRatings / totalRatings : 0;
 
@@ -26,5 +36,11 @@ export async function GET() {
     };
   });
 
-  return NextResponse.json({ books: booksWithAverageRate });
+  return NextResponse.json({
+    books: booksWithAverageRate,
+    page,
+    limit,
+    totalPages: Math.ceil(totalBooksCount / limit),
+    hasMore: skip + limit < totalBooksCount,
+  });
 }
