@@ -1,26 +1,15 @@
 import ActionButton from "@/src/components/ActionButton";
 import Heading from "@/src/components/Heading";
-import SmallCard from "@/src/components/SmallCard";
 import LastRead from "./components/LastRead";
-import { Book, Rating } from "@prisma/client";
-import { getLastRatedMovies } from "./actionts";
+import { getLastRatedMovies, getPopularMovies } from "./actionts";
 import { LastRatedBooks } from "./components/LastRatedBooks";
-
-type RatingWithAverageRate = Book & {
-  rate: number;
-  rating: Rating;
-};
+import { PopularBooks } from "./components/PopularBooks";
 
 export default async function Home() {
-  const [lastRatedBooks, popularBooksResponse] = await Promise.all([
+  const [lastRatedBooks, popularBooks] = await Promise.all([
     getLastRatedMovies(),
-    fetch(`${process.env.NEXTAUTH_URL}/api/books/popular`, {
-      cache: "no-store",
-    }).then((response) => response.json()),
+    getPopularMovies(),
   ]);
-
-  const popularBooks: RatingWithAverageRate[] =
-    popularBooksResponse?.books ?? [];
 
   return (
     <>
@@ -35,7 +24,7 @@ export default async function Home() {
               Avaliações mais recentes
             </strong>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_2.099rem_-_2.5rem_-_1rem_-_1.5rem)] overflow-y-scroll scrollable pb-3">
             <LastRatedBooks initialBooks={lastRatedBooks} />
           </div>
         </section>
@@ -48,21 +37,8 @@ export default async function Home() {
           </strong>
           <ActionButton text="Ver todos" />
         </div>
-        <div className="flex flex-col gap-3">
-          {popularBooks.map((book) => {
-            return (
-              <SmallCard
-                key={book.id}
-                book={{
-                  id: book.id,
-                  name: book.name,
-                  cover_url: book.cover_url,
-                  author: book.author,
-                  rating: book.rate,
-                }}
-              />
-            );
-          })}
+        <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_4.625rem_-_2.5rem_-_1rem)] scrollable overflow-y-scroll pb-3">
+          <PopularBooks initialBooks={popularBooks} />
         </div>
       </aside>
     </>

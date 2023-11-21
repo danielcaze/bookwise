@@ -7,7 +7,12 @@ type RatingsWithBookAndUser = Rating & {
   user: User;
 };
 
-type getPopularMoviesProps = {
+type RatingWithAverageRate = Book & {
+  rate: number;
+  rating: Rating;
+};
+
+type getMoviesProps = {
   limit?: number;
   page?: number;
 };
@@ -15,7 +20,7 @@ type getPopularMoviesProps = {
 export async function getLastRatedMovies({
   limit = 10,
   page = 1,
-}: getPopularMoviesProps = {}) {
+}: getMoviesProps = {}) {
   const response = await fetch(
     `${process.env.NEXTAUTH_URL}/api/books/last-ratings?limit=${limit}&page=${page}`,
     {
@@ -24,4 +29,18 @@ export async function getLastRatedMovies({
   ).then((response) => response.json());
 
   return (response.books ?? []) as RatingsWithBookAndUser[];
+}
+
+export async function getPopularMovies({
+  limit = 10,
+  page = 1,
+}: getMoviesProps = {}) {
+  const response = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/books/popular?limit=${limit}&page=${page}`,
+    {
+      cache: "no-store",
+    },
+  ).then((response) => response.json());
+
+  return (response.books ?? []) as RatingWithAverageRate[];
 }

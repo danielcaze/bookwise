@@ -3,7 +3,7 @@ import Navbar from "@/src/components/Navbar";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[calc(14.5rem_+_1.25rem)_1fr] gap-24 bg-gray800 min-h-screen">
+    <div className="grid grid-cols-[calc(14.5rem_+_1.25rem)_1fr] gap-24 bg-gray800 h-screen overflow-hidden">
       <div className="relative">
         <Navbar />
       </div>
