@@ -20,25 +20,33 @@ type getMoviesProps = {
 export async function getLastRatedMovies(
   { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
 ) {
-  const response = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/books/last-ratings?limit=${limit}&page=${page}`,
-    {
-      cache: "no-store",
-    },
-  ).then((response) => response.json());
+  try {
+    const response = await fetch(
+      `${process.env.NEXTAUTH_URL}/api/books/last-ratings?limit=${limit}&page=${page}`,
+      {
+        cache: "no-store",
+      },
+    ).then((response) => response.json());
 
-  return (response.books ?? []) as RatingsWithBookAndUser[];
+    return (response.books ?? []) as RatingsWithBookAndUser[];
+  } catch (error) {
+    return [];
+  }
 }
 
 export async function getPopularMovies(
   { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
 ) {
-  const response = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/books/popular?limit=${limit}&page=${page}`,
-    {
-      cache: "no-store",
-    },
-  ).then((response) => response.json());
+  try {
+    const response = await fetch(
+      `${process.env.NEXTAUTH_URL}/api/books/popular?limit=${limit}&page=${page}`,
+      {
+        cache: "no-store",
+      },
+    ).then((response) => response.json());
 
-  return (response.books ?? []) as RatingWithAverageRate[];
+    return (response.books ?? []) as RatingWithAverageRate[];
+  } catch (error) {
+    return [];
+  }
 }
