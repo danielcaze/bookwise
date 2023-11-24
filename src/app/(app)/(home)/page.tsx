@@ -24,21 +24,23 @@ export default async function Home() {
               Avaliações mais recentes
             </strong>
           </div>
-          <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_2.099rem_-_2.5rem_-_1rem_-_1.5rem)] overflow-y-scroll scrollable pb-3">
+          <div className="flex flex-col gap-3 pb-3">
             <LastRatedBooks initialBooks={lastRatedBooks} />
           </div>
         </section>
       </main>
 
-      <aside className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <strong className="font-regular text-gray200 text-sm">
-            Livros populares
-          </strong>
-          <ActionButton text="Ver todos" />
-        </div>
-        <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_4.625rem_-_2.5rem_-_1rem)] scrollable overflow-y-scroll pb-3">
-          <PopularBooks initialBooks={popularBooks} />
+      <aside className="relative">
+        <div className="sticky top-[calc(4.625rem_*_2)] right-24 left-0 flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <strong className="font-regular text-gray200 text-sm">
+              Livros populares
+            </strong>
+            <ActionButton text="Ver todos" />
+          </div>
+          <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_4.625rem_-_2.5rem_-_1rem)] scrollable overflow-y-scroll pb-3">
+            <PopularBooks initialBooks={popularBooks} />
+          </div>
         </div>
       </aside>
     </>
