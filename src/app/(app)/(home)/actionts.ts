@@ -17,10 +17,9 @@ type getMoviesProps = {
   page?: number;
 };
 
-export async function getLastRatedMovies({
-  limit = 10,
-  page = 1,
-}: getMoviesProps = {}) {
+export async function getLastRatedMovies(
+  { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
+) {
   const response = await fetch(
     `${process.env.NEXTAUTH_URL}/api/books/last-ratings?limit=${limit}&page=${page}`,
     {
@@ -31,10 +30,9 @@ export async function getLastRatedMovies({
   return (response.books ?? []) as RatingsWithBookAndUser[];
 }
 
-export async function getPopularMovies({
-  limit = 10,
-  page = 1,
-}: getMoviesProps = {}) {
+export async function getPopularMovies(
+  { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
+) {
   const response = await fetch(
     `${process.env.NEXTAUTH_URL}/api/books/popular?limit=${limit}&page=${page}`,
     {
