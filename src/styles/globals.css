@@ -8,8 +8,30 @@
   boxsizing: border-box;
 }
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply bg-gray800;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply transition-all ease-in-out bg-gray500 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply transition-all ease-in-out bg-gray600;
 }
 
 body,
@@ -51,15 +73,4 @@ button {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
-}
-
-.scrollable,
-body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollable::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
 }
