@@ -1,7 +1,7 @@
 import ActionButton from "@/src/components/ActionButton";
 import Heading from "@/src/components/Heading";
 import LastRead from "./components/LastRead";
-import { getLastRatedMovies, getPopularMovies } from "./actionts";
+import { getLastRatedMovies, getPopularMovies } from "./actions";
 import { LastRatedBooks } from "./components/LastRatedBooks";
 import { PopularBooks } from "./components/PopularBooks";
 

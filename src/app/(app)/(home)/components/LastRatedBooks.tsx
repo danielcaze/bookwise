@@ -3,7 +3,7 @@ import Card from "@/src/components/Card";
 import { Book, Rating, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { getLastRatedMovies } from "../actionts";
+import { getLastRatedMovies } from "../actions";
 
 type LastRatedBooksType = {
   initialBooks: Array<

@@ -2,7 +2,7 @@
 import { Book, Rating } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { getPopularMovies } from "../actionts";
+import { getPopularMovies } from "../actions";
 import SmallCard from "@/src/components/SmallCard";
 
 type PopularBooksType = {

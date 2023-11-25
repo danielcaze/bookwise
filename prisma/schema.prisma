@@ -52,6 +52,7 @@ model CategoriesOnBooks {
   @@id([book_id, categoryId])
   @@index([categoryId])
   @@index([book_id])
+  @@map("categories_on_books")
 }
 
 model Rating {

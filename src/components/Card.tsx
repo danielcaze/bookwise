@@ -29,6 +29,7 @@ export default function Card({ post, variation = "dark" }: CardProps) {
   return (
     <Link
       href="/teste"
+      prefetch={false}
       data-variation={variation}
       className="flex flex-col gap-8 w-full p-6 rounded-md data-[variation='light']:bg-gray600 data-[variation='dark']:bg-gray700 border border-gray700 hover:border-gray600"
     >
