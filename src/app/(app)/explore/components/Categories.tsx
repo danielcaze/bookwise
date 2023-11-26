@@ -27,10 +27,6 @@ export function Categories({ categories }: CategoriesProps) {
     return queryArray;
   });
   const [sliderRef] = useKeenSlider<HTMLDivElement>({
-    initial: 0,
-    loop: false,
-    rtl: false,
-    renderMode: "performance",
     mode: "snap",
     slides: {
       perView: "auto",
@@ -97,7 +93,7 @@ export function Categories({ categories }: CategoriesProps) {
               )}
               style={{ minWidth: "fit-content" }}
               onClick={() => handleToggleCategory(category.name.toLowerCase())}
-              className="keen-slider__slide rounded-full px-4 py-1 transition-all border border-purple100 text-purple100 data-[active='true']:border-purple200 data-[active='true']:bg-purple200 data-[active='true']:text-gray100"
+              className="keen-slider__slide rounded-full px-4 py-1 transition-colors border border-purple100 text-purple100 data-[active='true']:border-purple200 data-[active='true']:bg-purple200 data-[active='true']:text-gray100"
             >
               {category.name}
             </button>
