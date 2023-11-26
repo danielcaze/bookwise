@@ -23,7 +23,7 @@ export function Categories({ categories }: CategoriesProps) {
       ? typeof queryValue === "string" && queryValue.includes(",")
         ? queryValue.split(",")
         : [queryValue]
-      : [];
+      : ["all"];
     return queryArray;
   });
   const [sliderRef] = useKeenSlider<HTMLDivElement>({
@@ -38,9 +38,7 @@ export function Categories({ categories }: CategoriesProps) {
     let newCategories: string[] = [];
 
     if (categoryName.toLowerCase() === _ALL_CATEGORIES) {
-      newCategories = selectedCategories.includes(_ALL_CATEGORIES)
-        ? []
-        : [_ALL_CATEGORIES];
+      newCategories = [];
     } else {
       newCategories = selectedCategories.includes(_ALL_CATEGORIES)
         ? []
@@ -65,13 +63,18 @@ export function Categories({ categories }: CategoriesProps) {
 
     const params = new URLSearchParams(searchParams);
 
-    if (newCategories.toString()) {
-      params.set("categories", newCategories.toString());
-      router.push(`${pathname}?${params.toString()}`);
+    if (newCategories.length === 1 && newCategories[0] === _ALL_CATEGORIES) {
+      params.delete("categories");
+    } else if (newCategories.length) {
+      params.set("categories", newCategories.join(","));
     } else {
       params.delete("categories");
-      router.push(`${pathname}?${params.toString()}`);
     }
+
+    const queryString = params.toString();
+    const url = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.push(url);
   };
 
   return (
@@ -91,6 +94,7 @@ export function Categories({ categories }: CategoriesProps) {
               data-active={selectedCategories.includes(
                 category.name.toLowerCase(),
               )}
+              style={{ width: "fit-content" }}
               onClick={() => handleToggleCategory(category.name.toLowerCase())}
               className="keen-slider__slide rounded-full px-4 py-1 transition-colors border border-purple100 text-purple100 data-[active='true']:border-purple200 data-[active='true']:bg-purple200 data-[active='true']:text-gray100"
             >

@@ -38,7 +38,7 @@ export default async function Home() {
             </strong>
             <ActionButton text="Ver todos" />
           </div>
-          <div className="flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_4.625rem_-_2.5rem_-_1rem)] overflow-y-scroll pb-3">
+          <div className="pr-1 flex flex-col gap-3 h-[calc(100vh_-_4.5rem_-_4.625rem_-_2.5rem_-_1rem)] overflow-y-scroll pb-3">
             <PopularBooks initialBooks={popularBooks} />
           </div>
         </div>
