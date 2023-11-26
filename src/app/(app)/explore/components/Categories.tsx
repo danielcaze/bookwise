@@ -91,7 +91,6 @@ export function Categories({ categories }: CategoriesProps) {
               data-active={selectedCategories.includes(
                 category.name.toLowerCase(),
               )}
-              style={{ minWidth: "fit-content" }}
               onClick={() => handleToggleCategory(category.name.toLowerCase())}
               className="keen-slider__slide rounded-full px-4 py-1 transition-colors border border-purple100 text-purple100 data-[active='true']:border-purple200 data-[active='true']:bg-purple200 data-[active='true']:text-gray100"
             >
