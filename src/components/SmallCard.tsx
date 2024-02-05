@@ -1,14 +1,11 @@
 import Image from "next/image";
 import { Rating } from "./Rating";
 import Link from "next/link";
+import { Book } from "@prisma/client";
 
 type SmallCardProps = {
-  book: {
-    id: string;
-    name: string;
-    author: string;
-    rating: number;
-    cover_url: string;
+  book: Pick<Book, "id" | "name" | "cover_url" | "author"> & {
+    rate: number;
   };
 };
 
@@ -35,7 +32,7 @@ export default function SmallCard({ book }: SmallCardProps) {
             {book.author}
           </span>
         </div>
-        <Rating value={book.rating} />
+        <Rating value={book.rate} />
       </div>
     </Link>
   );

@@ -56,7 +56,7 @@ export default function LastRead() {
                 description: lastBookRated.summary,
                 id: lastBookRated.id,
                 name: lastBookRated.name,
-                rating: lastBookRated.rate,
+                rate: lastBookRated.rate,
               },
               created_at: lastBookRated.created_at,
               user: {

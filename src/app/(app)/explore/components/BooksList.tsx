@@ -51,7 +51,7 @@ export function BooksList() {
                   name: book.name,
                   cover_url: book.cover_url,
                   author: book.author,
-                  rating: book.rate,
+                  rate: book.rate,
                 }}
               />
             );

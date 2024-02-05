@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 type AvatarProps = HTMLAttributes<HTMLSpanElement> & {
-  avatarUrl: string;
+  avatarUrl: string | undefined | null;
   redirectUrl?: string;
   variation?: "sm" | "md" | "lg";
 };
@@ -39,7 +39,7 @@ export default function Avatar({
       <div className="h-full w-full bg-gradient-vertical rounded-[inherit] overflow-hidden">
         <AvatarComposition.Image
           className="h-full w-full rounded-[inherit] object-cover"
-          src={avatarUrl}
+          src={avatarUrl || ""}
           alt=""
         />
         <AvatarComposition.Fallback

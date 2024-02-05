@@ -1,16 +1,17 @@
 "use client";
-import Card from "@/src/components/Card";
-import { Book, Rating, User } from "@prisma/client";
+
+import { Book, Rating } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { getLastRatedBooks } from "../actions";
+import { getUserLastRatedBooksById } from "../../actions";
+import { useParams } from "next/navigation";
+import BookRating from "./BookRating";
 import { Spinner } from "@/src/components/Spinner";
 
 type LastRatedBooksType = {
   initialBooks: Array<
     Rating & {
-      book: Book;
-      user: User;
+      book: Book & { rate: number };
     }
   >;
 };
@@ -18,6 +19,7 @@ type LastRatedBooksType = {
 const _LIMIT = 10;
 
 export function LastRatedBooks({ initialBooks }: LastRatedBooksType) {
+  const params = useParams();
   const [hasMore, setHasMore] = useState(initialBooks.length === _LIMIT);
   const [books, setBooks] = useState(initialBooks);
   const [page, setPage] = useState(1);
@@ -25,7 +27,11 @@ export function LastRatedBooks({ initialBooks }: LastRatedBooksType) {
 
   async function loadMoreBooks() {
     const next = page + 1;
-    const books = await getLastRatedBooks({ page: next, limit: _LIMIT });
+    const books = await getUserLastRatedBooksById({
+      page: next,
+      limit: _LIMIT,
+      userId: String(params.id),
+    });
 
     if (books.length) {
       setPage(next);
@@ -39,32 +45,11 @@ export function LastRatedBooks({ initialBooks }: LastRatedBooksType) {
     if (inView) loadMoreBooks();
   }, [inView]);
 
-  return (
-    <>
-      {books.map((rating) => {
-        return (
-          <Card
-            key={rating.id}
-            post={{
-              book: {
-                author: rating.book.author,
-                cover_url: rating.book.cover_url,
-                description: rating.book.summary,
-                id: rating.book_id,
-                name: rating.book.name,
-                rate: rating.rate,
-              },
-              created_at: rating.created_at,
-              user: {
-                avatar_url: String(rating.user.avatar_url),
-                id: rating.user.id,
-                name: rating.user.name,
-              },
-            }}
-          />
-        );
+  return books.length > 0 ? (
+    <div className="flex flex-col gap-6 h-[calc(100vh_-_4.5rem_-_3.375rem_-_2.5rem_-_2.5rem_-_2.5rem)] overflow-auto pb-10">
+      {books.map((book) => {
+        return <BookRating key={book.id} post={book} />;
       })}
-
       {hasMore ? (
         <div role="status" className="my-5 mx-auto" ref={ref}>
           <Spinner />
@@ -72,6 +57,10 @@ export function LastRatedBooks({ initialBooks }: LastRatedBooksType) {
       ) : (
         <></>
       )}
-    </>
+    </div>
+  ) : (
+    <p className="text-center text-gray300">
+      Esse usuário ainda não fez nenhum comentário.
+    </p>
   );
 }

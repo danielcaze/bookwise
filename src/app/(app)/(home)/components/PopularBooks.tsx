@@ -2,7 +2,7 @@
 import { Book, Rating } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { getPopularMovies } from "../actions";
+import { getPopularBooks } from "../actions";
 import SmallCard from "@/src/components/SmallCard";
 
 type PopularBooksType = {
@@ -22,20 +22,20 @@ export function PopularBooks({ initialBooks }: PopularBooksType) {
   const [page, setPage] = useState(1);
   const { ref, inView } = useInView();
 
-  async function loadMoreMovies() {
+  async function loadMoreBooks() {
     const next = page + 1;
-    const movies = await getPopularMovies({ page: next, limit: _LIMIT });
+    const books = await getPopularBooks({ page: next, limit: _LIMIT });
 
-    if (movies.length) {
+    if (books.length) {
       setPage(next);
-      setBooks((state) => [...state, ...movies]);
+      setBooks((state) => [...state, ...books]);
     }
 
-    setHasMore(movies.length === _LIMIT);
+    setHasMore(books.length === _LIMIT);
   }
 
   useEffect(() => {
-    if (inView) loadMoreMovies();
+    if (inView) loadMoreBooks();
   }, [inView]);
 
   return (
@@ -49,7 +49,7 @@ export function PopularBooks({ initialBooks }: PopularBooksType) {
               name: book.name,
               cover_url: book.cover_url,
               author: book.author,
-              rating: book.rate,
+              rate: book.rate,
             }}
           />
         );

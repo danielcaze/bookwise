@@ -4,23 +4,16 @@ import { Rating } from "./Rating";
 import Link from "next/link";
 import Description from "./Description";
 import { Time } from "./Time";
+import { Book, User } from "@prisma/client";
 
 type CardProps = {
   variation?: "light" | "dark";
   post: {
     created_at: Date;
-    user: {
-      id: string;
-      name: string;
-      avatar_url: string;
-    };
-    book: {
-      id: string;
-      name: string;
+    user: Pick<User, "id" | "name" | "avatar_url">;
+    book: Pick<Book, "author" | "cover_url" | "id" | "name"> & {
       description: string;
-      author: string;
-      rating: number;
-      cover_url: string;
+      rate: number;
     };
   };
 };
@@ -44,7 +37,7 @@ export default function Card({ post, variation = "dark" }: CardProps) {
           <p className="text-md leading-base text-gray100">{post.user.name}</p>
           <Time date={post.created_at} />
         </div>
-        <Rating value={post.book.rating} />
+        <Rating value={post.book.rate} />
       </div>
 
       <div className="grid grid-cols-[6.75rem_1fr] gap-5">

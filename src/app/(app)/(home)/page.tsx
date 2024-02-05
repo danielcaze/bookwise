@@ -1,18 +1,18 @@
 import ActionButton from "@/src/components/ActionButton";
 import Heading from "@/src/components/Heading";
 import LastRead from "./components/LastRead";
-import { getLastRatedMovies, getPopularMovies } from "./actions";
+import { getLastRatedBooks, getPopularBooks } from "./actions";
 import { LastRatedBooks } from "./components/LastRatedBooks";
 import { PopularBooks } from "./components/PopularBooks";
 
 export default async function Home() {
   const [lastRatedBooks, popularBooks] = await Promise.all([
-    getLastRatedMovies(),
-    getPopularMovies(),
+    getLastRatedBooks(),
+    getPopularBooks(),
   ]);
 
   return (
-    <>
+    <div className="[&_>_aside:last-child]:mt-[4.625rem] grid grid-cols-[2fr_1fr] gap-16">
       <main className="flex flex-col gap-10">
         <Heading text="Início" icon="ChartLineUp" />
 
@@ -43,6 +43,6 @@ export default async function Home() {
           </div>
         </div>
       </aside>
-    </>
+    </div>
   );
 }

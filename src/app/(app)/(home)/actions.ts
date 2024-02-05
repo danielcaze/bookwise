@@ -12,13 +12,13 @@ type RatingWithAverageRate = Book & {
   rating: Rating;
 };
 
-type getMoviesProps = {
+type getBooksProps = {
   limit?: number;
   page?: number;
 };
 
-export async function getLastRatedMovies(
-  { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
+export async function getLastRatedBooks(
+  { limit = 10, page = 1 }: getBooksProps = { limit: 10, page: 1 },
 ) {
   try {
     const response = await fetch(
@@ -34,8 +34,8 @@ export async function getLastRatedMovies(
   }
 }
 
-export async function getPopularMovies(
-  { limit = 10, page = 1 }: getMoviesProps = { limit: 10, page: 1 },
+export async function getPopularBooks(
+  { limit = 10, page = 1 }: getBooksProps = { limit: 10, page: 1 },
 ) {
   try {
     const response = await fetch(
