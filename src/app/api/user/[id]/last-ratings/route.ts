@@ -17,7 +17,7 @@ export async function GET(
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") ?? "1", 10) || 1;
   const limit = parseInt(url.searchParams.get("limit") ?? "10", 10) || 10;
-
+  const search = url.searchParams.get("search") ?? "";
   const skip = (page - 1) * limit;
 
   const totalRatingsCount = await prisma.rating.count();
@@ -27,6 +27,15 @@ export async function GET(
     take: limit,
     where: {
       user_id: userId,
+      ...(search
+        ? {
+            book: {
+              name: {
+                contains: search,
+              },
+            },
+          }
+        : {}),
     },
     orderBy: {
       created_at: "desc",

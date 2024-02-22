@@ -62,18 +62,12 @@ export async function GET(
     (prev, current) => {
       return prev[1].count > current[1].count ? prev : current;
     },
+    ["", { count: 0, category: null }],
   );
 
   const mostReadCategory = mostReadCategoryEntry
     ? mostReadCategoryEntry[1].category
     : null;
-
-  if (!mostReadCategory) {
-    return NextResponse.json(
-      { error: "Most read category not found" },
-      { status: 404 },
-    );
-  }
 
   return NextResponse.json({
     pagesRead,

@@ -13,21 +13,26 @@ type getBooksProps = {
 };
 
 export async function getUserLastRatedBooksById(
-  { limit = 10, page = 1, userId }: getBooksProps & { userId: string } = {
+  {
+    limit = 10,
+    page = 1,
+    userId = "",
+    search = "",
+  }: getBooksProps & { userId: string; search: string } = {
     limit: 10,
     page: 1,
     userId: "",
+    search: "",
   },
 ) {
   try {
     if (!userId) throw new Error("User ID not provided");
     const response = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/user/${userId}/last-ratings?limit=${limit}&page=${page}`,
+      `${process.env.NEXTAUTH_URL}/api/user/${userId}/last-ratings?limit=${limit}&page=${page}&search=${search}`,
       {
         cache: "no-store",
       },
     ).then((response) => response.json());
-
     return (response.books ?? []) as Array<
       RatingsWithBookAndUser & { book: { rate: number } }
     >;

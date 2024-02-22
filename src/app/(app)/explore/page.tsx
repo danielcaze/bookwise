@@ -1,5 +1,5 @@
 import Heading from "@/src/components/Heading";
-import { SearchInput } from "@/src/app/(app)/explore/components/SearchInput";
+import { SearchInput } from "@/src/components/SearchInput";
 import { getCategories } from "./actions";
 import { Categories } from "./components/Categories";
 import { BooksList } from "./components/BooksList";
@@ -13,7 +13,7 @@ export default async function Explore() {
         <Heading
           text="Explorar"
           icon="Binoculars"
-          customItem={<SearchInput />}
+          customItem={<SearchInput placeholder="Buscar livro ou autor" />}
         />
         <Categories categories={categories} />
       </div>

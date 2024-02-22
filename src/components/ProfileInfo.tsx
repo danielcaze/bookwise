@@ -3,11 +3,12 @@ import { getUserProfileInfoById } from "../app/(app)/profile/actions";
 import Avatar from "./Avatar";
 import { ProfileData } from "./ProfileData";
 
-export async function ProfileInfo() {
-  const profileInfo = await getUserProfileInfoById(
-    "4383f783-6ce1-4f92-b1dd-7a7a693c4aef",
-  );
+type ProfileInfoProps = {
+  id: string;
+};
 
+export async function ProfileInfo({ id }: ProfileInfoProps) {
+  const profileInfo = await getUserProfileInfoById(id);
   return (
     <div className="flex flex-col gap-8 border-l border-l-gray700 max-w-xs">
       <div className="flex flex-col gap-5 items-center">
@@ -39,11 +40,13 @@ export async function ProfileInfo() {
             title={profileInfo.authorsRead}
             subtitle="Autores lidos"
           />
-          <ProfileData
-            icon="BookmarkSimple"
-            title={profileInfo.mostReadCategory.name}
-            subtitle="Categoria mais lida"
-          />
+          {
+            <ProfileData
+              icon="BookmarkSimple"
+              title={profileInfo.mostReadCategory?.name ?? "--"}
+              subtitle="Categoria mais lida"
+            />
+          }
         </div>
       )}
     </div>

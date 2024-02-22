@@ -2,9 +2,13 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef, useEffect } from "react";
-import { Input } from "../../../../components/Input";
+import { Input } from "./Input";
 
-export function SearchInput() {
+type SearchInputProps = {
+  placeholder?: string;
+};
+
+export function SearchInput({ placeholder = "Buscar" }: SearchInputProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -31,7 +35,7 @@ export function SearchInput() {
 
   return (
     <Input
-      placeholder="Buscar livro ou autor"
+      placeholder={placeholder}
       onSubmitSearch={handleSearch}
       ref={searchRef}
       className="max-lg:w-full"

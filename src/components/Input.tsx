@@ -21,7 +21,7 @@ const InputComponent: ForwardRefRenderFunction<
   return (
     <div
       className={twMerge(
-        "flex items-center justify-between gap-2 px-5 py-[0.875rem] border border-gray500 rounded-[4px] bg-gray800 focus-within:outline",
+        "inner-focus-group flex items-center justify-between gap-2 px-5 py-[0.875rem] border border-gray500 grid-cols-[1fr_1.25rem] rounded-xs bg-gray800 focus-within:outline",
         className,
       )}
     >

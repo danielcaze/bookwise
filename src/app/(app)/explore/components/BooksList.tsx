@@ -16,13 +16,13 @@ export function BooksList() {
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState<RatingWithAverageRate[]>([]);
 
-  const getBooks = async () => {
-    const params = new URLSearchParams(searchParams);
-    const page = parseInt(params.get("page") ?? "1", 10) || 1;
-    const limit = parseInt(params.get("limit") ?? "10", 10) || 10;
-    const categories = params.get("categories") ?? "";
-    const search = params.get("search") ?? "";
+  const params = new URLSearchParams(searchParams);
+  const page = parseInt(params.get("page") ?? "1", 10) || 1;
+  const limit = parseInt(params.get("limit") ?? "10", 10) || 10;
+  const categories = params.get("categories") ?? "";
+  const search = params.get("search") ?? "";
 
+  const getBooks = async () => {
     try {
       setLoading(true);
       const books = await getExploreBooks({ page, limit, search, categories });
@@ -36,7 +36,7 @@ export function BooksList() {
 
   useEffect(() => {
     getBooks();
-  }, [searchParams]);
+  }, [page, limit, categories, search]);
 
   return (
     <div>
