@@ -18,8 +18,14 @@ export default function ButtonLogin({ provider }: ButtonLoginProps) {
   };
 
   const login = {
-    [PROVIDERS.GOOGLE]: () => signIn(PROVIDERS.GOOGLE),
-    [PROVIDERS.GITHUB]: () => signIn(PROVIDERS.GITHUB),
+    [PROVIDERS.GOOGLE]: () =>
+      signIn(PROVIDERS.GOOGLE, {
+        callbackUrl: "http://localhost:3000",
+      }),
+    [PROVIDERS.GITHUB]: () =>
+      signIn(PROVIDERS.GITHUB, {
+        callbackUrl: "http://localhost:3000",
+      }),
   };
 
   const handleLogin = async () =>

@@ -7,7 +7,6 @@ import Avatar from "./Avatar";
 
 export default function LoginStatus() {
   const { data } = useSession();
-
   const handleSignOut = async () => {
     try {
       await signOut({
